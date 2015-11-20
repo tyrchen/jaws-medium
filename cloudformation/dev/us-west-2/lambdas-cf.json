@@ -1,0 +1,46 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "jaws-medium lambdas",
+  "Parameters": {
+    "aaLambdaRoleArn": {
+      "Type": "String",
+      "Default": "arn:aws:iam::841384679316:role/dev-jaws-medium-r-IamRoleLambda-GIX550Z3VFYI"
+    }
+  },
+  "Resources": {
+    "lAccountsCreate": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Description": "",
+        "Handler": "aws_modules/accounts/create/handler.handler",
+        "MemorySize": 512,
+        "Runtime": "nodejs",
+        "Timeout": 6,
+        "Code": {
+          "S3Bucket": "jaws.dev.uswest2.tchen.me",
+          "S3Key": "JAWS/jaws-medium/dev/lambdas/lAccountsCreate@1446072041133.zip"
+        },
+        "Role": {
+          "Ref": "aaLambdaRoleArn"
+        }
+      }
+    },
+    "lAccountsLogin": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Description": "",
+        "Handler": "aws_modules/accounts/login/handler.handler",
+        "MemorySize": 512,
+        "Runtime": "nodejs",
+        "Timeout": 6,
+        "Code": {
+          "S3Bucket": "jaws.dev.uswest2.tchen.me",
+          "S3Key": "JAWS/jaws-medium/dev/lambdas/lAccountsLogin@1446072041981.zip"
+        },
+        "Role": {
+          "Ref": "aaLambdaRoleArn"
+        }
+      }
+    }
+  }
+}

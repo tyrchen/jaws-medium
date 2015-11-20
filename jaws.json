@@ -1,0 +1,19 @@
+{
+  "name": "jaws-medium",
+  "version": "0.0.1",
+  "location": "https://github.com/...",
+  "author": "",
+  "description": "",
+  "domain": "tchen.me",
+  "stages": {
+    "dev": [
+      {
+        "region": "us-west-2",
+        "iamRoleArnLambda": "arn:aws:iam::841384679316:role/dev-jaws-medium-r-IamRoleLambda-GIX550Z3VFYI",
+        "iamRoleArnApiGateway": "arn:aws:iam::841384679316:role/dev-jaws-medium-r-IamRoleApiGateway-141QB5RHM71SS",
+        "jawsBucket": "jaws.dev.uswest2.tchen.me",
+        "restApiId": "sus1x7agal"
+      }
+    ]
+  }
+}

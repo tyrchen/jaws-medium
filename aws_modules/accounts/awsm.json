@@ -1,0 +1,81 @@
+{
+  "name": "accounts",
+  "version": "0.0.1",
+  "location": "https://github.com/tyrchen/jaws-medium/aws_modules/accounts",
+  "author": "Tyr Chen",
+  "description": "Process accounts creation and authentication",
+  "resources": {
+    "cloudFormation": {
+      "ApiGatewayIamPolicyDocumentStatements": [],
+      "LambdaIamPolicyDocumentStatements": [{
+        "Effect": "Allow",
+        "Action": ["*"],
+        "Resources": {
+          "Fn::Join": [
+            ":",
+            ["arn:aws:dynamodb", { "Ref": "AWS::Region" }, "*", "table/jaws-medium-accounts"]
+          ]
+        }
+      }],
+      "Resources": {
+        "DynamoDB": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "AttributeDefinitions": [{
+              "AttributeName": "username",
+              "AttributeType": "S"
+            }, {
+              "AttributeName": "password",
+              "AttributeType": "S"
+            }, {
+              "AttributeName": "salt",
+              "AttributeType": "S"
+            }, {
+              "AttributeName": "email",
+              "AttributeType": "S"
+            }, {
+              "AttributeName": "fullname",
+              "AttributeType": "S"
+            }, {
+              "AttributeName": "bio",
+              "AttributeType": "S"
+            }, {
+              "AttributeName": "activationCode",
+              "AttributeType": "S"
+            }, {
+              "AttributeName": "createdAt",
+              "AttributeType": "N"
+            }, {
+              "AttributeName": "updatedAt",
+              "AttributeType": "S"
+            }],
+            "KeySchema": [{
+              "AttributeName": "username",
+              "KeyType": "HASH"
+            }],
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits" : {"Ref" : "aaDefaultDynamoReadThroughput"},
+              "WriteCapacityUnits" : {"Ref" : "aaDefaultDynamoWriteThroughput"}
+            },
+            "GlobalSecondaryIndexes" : [{
+              "IndexName" : "jaws-medium-accounts-email",
+              "KeySchema" : [{
+                "AttributeName" : "email",
+                "KeyType" : "HASH"
+              }],
+              "Projection" : {
+                "NonKeyAttributes" : ["password", "salt"],
+                "ProjectionType" : "INCLUDE"
+              },
+              "ProvisionedThroughput" : {
+                "ReadCapacityUnits" : {"Ref" : "aaDefaultDynamoReadThroughput"},
+                "WriteCapacityUnits" : {"Ref" : "aaDefaultDynamoWriteThroughput"}
+              }
+            }],
+            "TableName": "jaws-medium-accounts"
+          }
+        }
+      }
+    }
+  }
+}
